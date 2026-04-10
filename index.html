@@ -43,6 +43,9 @@
         }
     </style>
 </head>
+<button id="vr-button" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+  Attiva Modalità Immersiva
+</button>
 <body>
 
 <div id="panorama"></div>
@@ -60,6 +63,20 @@ const tourData = [
     { file: "Siracusa_foto_007.jpg", info: [] },
     { file: "Siracusa_foto_008.jpg", info: [] }
 ];
+const vrButton = document.getElementById('vr-button');
+vrButton.addEventListener('click', () => {
+  if (!document.fullscreenElement) {
+    // Entra in modalità schermo intero
+    document.documentElement.requestFullscreen().catch(err => {
+      console.error(`Errore nel tentativo di attivare il pieno schermo: ${err.message}`);
+    });
+    vrButton.textContent = "Esci da VR";
+  } else {
+    // Esce dalla modalità schermo intero
+    document.exitFullscreen();
+    vrButton.textContent = "Attiva Modalità Immersiva";
+  }
+});
 
 // 2. GENERATORE DI SCENE
 function generaScene(dati) {
